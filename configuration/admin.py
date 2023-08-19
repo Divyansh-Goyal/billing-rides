@@ -1,5 +1,15 @@
 from django.contrib import admin
 from .models import Configuration
-# Register your models here.
+from .serializers import ConfigurationSerializer
+from .importAction import ExportCsvMixin
 
-admin.site.register(Configuration)
+
+
+class ConfigurationAdmin(admin.ModelAdmin, ExportCsvMixin):
+    list_display = ["day"]
+    ordering = ["id"]
+    actions = ["export_as_csv"]
+
+
+
+admin.site.register(Configuration, ConfigurationAdmin)
